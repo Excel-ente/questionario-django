@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+{% include 'includes/header.html' %}
+
+<body>
+
+{# Fondo Animado #}
+<div class='box'>
+    <div class='wave -one'></div>
+    <div class='wave -two'></div>
+    <div class='wave -three'></div>
+</div>
+
+<!-- Cuadro de Resultados -->
+<div class="result_box activeResult">
+    <div class="icon">
+        <i class="fas fa-thumbs-up" style="color: #43b31b"></i>
+    </div>
+
+    <div class="complete_text">¡Tu examen ha terminado!</div>
+
+    <div class="score_text">
+
+            <br>
+
+            <span>Nombre completo: {{ user.fullname }}</span>
+
+            <span>Número total de preguntas: {{ user.totall }}</span>
+
+            <span>Tu puntuación: {{ user.score }}</span>
+
+            <span>Respuestas correctas: {{ user.correct }}</span>
+            <span>Respuestas incorrectas: {{ user.wrong }}</span>
+
+    </div>
+
+    <div class="buttons">
+        <a style="padding: 10px;" class="restart" href="{% url 'quiz:send_email' %}">Salir de la aplicación</a>
+        <a style="padding: 10px;" class="quit" href="{% url 'quiz:quiz_page' %}">Volver</a>
+    </div>
+</div>
+
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

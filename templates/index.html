@@ -1,0 +1,90 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+
+{% include 'includes/header.html' %}
+
+<body>
+<div class='box'>
+    <div class='wave -one'></div>
+    <div class='wave -two'></div>
+    <div class='wave -three'></div>
+</div>
+
+<!-- Botón de Inicio del Examen -->
+{% if flag %}
+    <div class="start_btn">
+        <button>Comenzar !</button>
+    </div>
+{% else %}
+    <div class="start_btn">
+        <a class="restart" href="{% url 'quiz:result_page' %}?fullname={{ request.user.username }}">Ver Resultados</a>
+    </div>
+{% endif %}
+
+<!-- Cuadro de Información -->
+<div class="info_box">
+    <div class="info-title"><span>Reglas del Juego</span></div>
+    <div class="info-list">
+        <div class="info">1. Tienes <span>45 segundos</span> para cada pregunta.</div>
+        <div class="info">2. Cada pregunta vale <span>10 puntos</span>.</div>
+        <div class="info">3. Tu puntuación se basará en tus respuestas correctas.</div>
+        <div class="info">4. No podrás seleccionar respuestas después de que se agote el tiempo.</div>
+        <div class="info">5. No puedes salir del examen una vez que comience.</div>
+        <div class="info">6. Las preguntas no respondidas se contarán como incorrectas.</div>
+        <div class="info">7. Cada usuario solo puede tomar el examen una vez.</div>
+    </div>
+    <div class="buttons">
+        <button class="quit">Salir</button>
+        <button class="restart">Continuar</button>
+    </div>
+</div>
+
+<!-- Cuadro del Examen -->
+<div class="quiz_box" style="max-height: 90vh;overflow-y: auto;" >
+    <header>
+        <div class="title">{{ request.user.username.capitalize }}</div>
+        <div class="timer">
+            <div class="time_left_txt">Tiempo Restante</div>
+            <div class="timer_sec"></div>
+        </div>
+    </header>
+    <section class="scroller">
+        <form method="post">
+            {% csrf_token %}
+            {% for q in questions %}
+                {% if q.status %}
+                    <div class="que_text">
+                        <span>{{ q.question }}</span>
+                    </div>
+                    <div class="option_list">
+                        <div class="option"><input type="radio" name="{{ q.question }}" id="radios"
+                                                   value="option1">{{ q.option1 }}</div>
+                        <div class="option"><input type="radio" name="{{ q.question }}" id="radios"
+                                                   value="option2">{{ q.option2 }}</div>
+                        <div class="option"><input type="radio" name="{{ q.question }}" id="radios"
+                                                   value="option3">{{ q.option3 }}</div>
+                        <div class="option"><input type="radio" name="{{ q.question }}" id="radios"
+                                                   value="option4">{{ q.option4 }}</div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <!-- Pie de la Caja del Examen -->
+            <footer>
+                <div class="total_que">
+                </div>
+                <button class="next_btn show" type="submit">Finalizar Examen</button>
+            </footer>
+        </form>
+    </section>
+</div>
+
+<!-- Dentro de este archivo JavaScript he codificado todo el código del Examen -->
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+
+
+
+</html>
