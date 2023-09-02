@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import logout
-from django.views.decorators.csrf import csrf_protect
+
 
 
 
@@ -74,7 +74,7 @@ def send_email(request):
 
 # ----------------- API VIEWS--------------------
 
-@csrf_protect
+
 class QuestionListView(APIView):
     permission_classes = [IsAuthenticated]
 
