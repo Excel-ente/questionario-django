@@ -9,7 +9,10 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import logout
+from django.views.decorators.csrf import csrf_protect
 
+
+@csrf_protect
 class Quiz(View):
     def get(self, request):
         if request.user.is_authenticated:
@@ -51,7 +54,7 @@ class Quiz(View):
 
         return redirect(reverse('quiz:result_page') + f'?fullname={fullname}')
 
-
+@csrf_protect
 class Result(View):
     def get(self, request):
         if request.user.is_authenticated:
@@ -71,7 +74,7 @@ def send_email(request):
 
 # ----------------- API VIEWS--------------------
 
-
+@csrf_protect
 class QuestionListView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -83,7 +86,7 @@ class QuestionListView(APIView):
             serializer = QuestionsSerializer(instance=questions_list, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
-
+@csrf_protect
 class QuestionAddView(APIView):
     permission_classes = [IsAuthenticated, IsStaff]
 
@@ -95,7 +98,7 @@ class QuestionAddView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+@csrf_protect
 class QuestionUpdateView(APIView):
     permission_classes = [IsAuthenticated, IsStaff]
 
@@ -108,7 +111,7 @@ class QuestionUpdateView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+@csrf_protect
 class QuestionDeleteView(APIView):
     permission_classes = [IsAuthenticated, IsStaff]
 
@@ -117,7 +120,7 @@ class QuestionDeleteView(APIView):
         instance.delete()
         return Response({"response": "question deleted"}, status=status.HTTP_200_OK)
 
-
+@csrf_protect
 class ResultView(APIView):
     permission_classes = [IsAuthenticated]
 
