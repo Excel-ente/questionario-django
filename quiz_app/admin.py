@@ -1,9 +1,9 @@
 from django.contrib import admin
 from .models import Question, UserResult
 from django.contrib.auth.models import Group
+from import_export.admin import ImportExportModelAdmin
 
-
-class ResultAdmin(admin.ModelAdmin):
+class ResultAdmin(ImportExportModelAdmin):
     readonly_fields = (
         'fullname',
         'totall',
@@ -18,7 +18,7 @@ class ResultAdmin(admin.ModelAdmin):
     search_fields = ('fullname',)
 
 
-class QuestionAdmin(admin.ModelAdmin):
+class QuestionAdmin(ImportExportModelAdmin):
     list_display = ('question', 'answer', 'status')
     list_filter = ('status',)
 
