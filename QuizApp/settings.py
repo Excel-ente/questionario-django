@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'drf_spectacular',
     # My apps
+    'import_export',
     'account_app.apps.AccountAppConfig',
     'quiz_app.apps.QuizAppConfig',
 ]
